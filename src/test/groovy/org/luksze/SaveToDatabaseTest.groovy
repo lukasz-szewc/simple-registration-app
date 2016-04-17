@@ -8,10 +8,12 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.web.WebAppConfiguration
 import spock.lang.Specification
 
+import javax.validation.ConstraintViolationException
+
 @ContextConfiguration(classes = [UserRegistrationApplication.class], loader = SpringApplicationContextLoader.class)
 @WebAppConfiguration
 @IntegrationTest
-class PersistenceTest extends Specification {
+class SaveToDatabaseTest extends Specification {
 
     @Autowired
     private ApplicationUserTransactionalRepository repository
@@ -36,8 +38,18 @@ class PersistenceTest extends Specification {
         repository.persistWithinTransaction(new ApplicationUser("Chris", "passwordA1"))
 
         then: "operation is not successful"
-        def throwable = thrown(DataIntegrityViolationException)
+        thrown(DataIntegrityViolationException)
+    }
 
+    def "application will prevent to add user whose password and name does not match criteria"() {
+        given: "user with to short password and name"
+        def user = new ApplicationUser("to", "short")
+
+        when: "user is saved.."
+        repository.persistWithinTransaction(user)
+
+        then: "operation is not successful"
+        thrown(ConstraintViolationException)
     }
 
     private userAlreadyPersistedInTheDatabase() {
