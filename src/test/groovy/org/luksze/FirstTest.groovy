@@ -2,13 +2,16 @@ package org.luksze
 
 import spock.lang.Specification
 
-class First extends Specification {
-    def "let's try this!"() {
-        expect:
-        Math.max(1, 2) == 2
-    }
+class FirstTest extends Specification {
 
-    def "second test"() {
-        expect: 1 + 1 == 2
+    def "test with java class"() {
+        given:
+        def object = new SimpleJavaObject()
+
+        when:
+        object.actionPerformed()
+
+        then:
+        object.operationIsSuccessful()
     }
 }
