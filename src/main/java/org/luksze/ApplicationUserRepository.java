@@ -22,10 +22,9 @@ public class ApplicationUserRepository {
     }
 
     public boolean checkUserExist(UserName userName) {
-        String query = "select u from ApplicationUser u where u.name = :name";
+        String query = "select u from ApplicationUser u where UPPER(u.name.name) = :name";
         TypedQuery<ApplicationUser> typedQuery = entityManager.createQuery(query, ApplicationUser.class);
-        typedQuery.setParameter("name", userName);
-        List<ApplicationUser> resultList = typedQuery.getResultList();
-        return !resultList.isEmpty();
+        typedQuery.setParameter("name", userName.getName().toUpperCase());
+        return !typedQuery.getResultList().isEmpty();
     }
 }
