@@ -1,15 +1,18 @@
 var app = angular.module("registrationApp", []);
 
 app.controller('RegisterUserController', ['$http', '$scope', function($http, $scope) {
-
     $scope.submit = function() {
+        $scope.objectSaved = null;
+        $scope.objectNotSaved = null;
         $http.post('/user/add', {
             password : $scope.password,
             name : $scope.username
         }).then(
             function(data) {
+                $scope.objectSaved = true;
             },
             function(data) {
+                $scope.objectNotSaved = true;
             });
     };
 

@@ -51,6 +51,15 @@
             <div class="form-actions">
                 <button type="submit" ng-click="submit()" ng-disabled="form.$invalid" class="btn btn-primary">Register</button>
             </div>
+
+            <div ng-show="objectSaved" class="alert alert-success" role="alert" style="margin-top: 26px">
+                User has been successfully saved in database.
+            </div>
+
+            <div ng-show="objectNotSaved" class="alert alert-danger" role="alert" style="margin-top: 26px">
+                Error during save to database.
+            </div>
+
         </form>
     </div>
 </div>
