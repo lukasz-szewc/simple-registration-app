@@ -12,13 +12,14 @@ public class ApplicationUser {
     @GeneratedValue
     private Long id;
 
-    private String name;
+    @Embedded
+    private UserName name;
 
     @Embedded
     private Password password;
 
     public ApplicationUser(String name, String password) {
-        this.name = name;
+        this.name = new UserName(name);
         this.password = new Password(password);
     }
 
