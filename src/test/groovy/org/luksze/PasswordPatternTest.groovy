@@ -37,7 +37,6 @@ class PasswordPatternTest extends Specification {
         new Password("password1")      | "it does not contain uppercase character"
         new Password("PASSWORD1")      | "it does not contain lowercase character"
         new Password("Password")       | "it does not contain numeric character"
-        new Password("Pass word1")     | "it contains space"
     }
 
 }
