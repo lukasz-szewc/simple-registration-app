@@ -3,7 +3,6 @@ package org.luksze
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import javax.validation.ConstraintViolation
 import javax.validation.Validation
 import javax.validation.Validator
 
