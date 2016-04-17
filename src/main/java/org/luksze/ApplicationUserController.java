@@ -15,6 +15,9 @@ public class ApplicationUserController {
     @Autowired
     private ApplicationUserRepository repository;
 
+    @Autowired
+    private ApplicationUserTransactionalRepository transactionalRepository;
+
     @Transactional
     @RequestMapping(value = "/username/verify", method = RequestMethod.POST)
     public void username(@RequestBody @Valid UserName userName) {
@@ -27,6 +30,8 @@ public class ApplicationUserController {
     public void password(@RequestBody @Valid Password password) {}
 
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
-    public void user(@RequestBody @Valid ApplicationUser user) {}
+    public void user(@RequestBody @Valid ApplicationUser user) {
+        transactionalRepository.persistWithinTransaction(user);
+    }
 
 }

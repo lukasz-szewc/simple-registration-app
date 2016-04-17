@@ -51,4 +51,12 @@ public class ApplicationUser {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
+
+    public void setName(UserName name) {
+        this.name = name;
+    }
+
+    public void setPassword(Password password) {
+        this.password = password;
+    }
 }
