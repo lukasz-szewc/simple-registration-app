@@ -4,6 +4,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.Valid;
 
 @Entity
 public class ApplicationUser {
@@ -13,9 +14,11 @@ public class ApplicationUser {
     private Long id;
 
     @Embedded
+    @Valid
     private UserName name;
 
     @Embedded
+    @Valid
     private Password password;
 
     public ApplicationUser(String name, String password) {
