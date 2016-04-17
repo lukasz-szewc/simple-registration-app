@@ -1,5 +1,6 @@
 package org.luksze;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,11 +14,12 @@ public class ApplicationUser {
 
     private String name;
 
-    private String password;
+    @Embedded
+    private Password password;
 
     public ApplicationUser(String name, String password) {
         this.name = name;
-        this.password = password;
+        this.password = new Password(password);
     }
 
     @SuppressWarnings("unused")
