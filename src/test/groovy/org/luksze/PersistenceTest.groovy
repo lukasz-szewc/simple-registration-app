@@ -13,7 +13,7 @@ import spock.lang.Specification
 class PersistenceTest extends Specification {
 
     @Autowired
-    private ApplicationUserRepository repository
+    private TransactionalRepository repository
 
     def "application can perists objects into database"() {
         given: "transient entity object"
@@ -23,7 +23,7 @@ class PersistenceTest extends Specification {
         repository.persistWithinTransaction(user)
 
         then: "object is present in database"
-        def retrievedUser = repository.findById(user.id)
+        def retrievedUser = repository.findByIdInSeparateTransaction(user.id)
         retrievedUser.equals(user)
     }
 }
