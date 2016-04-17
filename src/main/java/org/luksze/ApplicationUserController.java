@@ -26,4 +26,7 @@ public class ApplicationUserController {
     @RequestMapping(value = "/password/verify", method = RequestMethod.POST)
     public void password(@RequestBody @Valid Password password) {}
 
+    @RequestMapping(value = "/user/add", method = RequestMethod.POST)
+    public void user(@RequestBody @Valid ApplicationUser user) {}
+
 }

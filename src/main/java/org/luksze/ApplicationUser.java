@@ -37,14 +37,18 @@ public class ApplicationUser {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         ApplicationUser that = (ApplicationUser) o;
-        return name.equals(that.name) && password.equals(that.password);
+
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        return !(password != null ? !password.equals(that.password) : that.password != null);
+
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + password.hashCode();
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
 }
