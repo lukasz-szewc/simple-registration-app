@@ -8,16 +8,14 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-public class SimpleRestController {
+public class ApplicationUserController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String example() {
         return "ok";
     }
 
-    @RequestMapping(value = "/check", method = RequestMethod.POST)
-    public String password(@RequestBody @Valid Password password) {
-        return "ok";
-    }
+    @RequestMapping(value = "/password/verify", method = RequestMethod.POST)
+    public void password(@RequestBody @Valid Password password) {}
 
 }

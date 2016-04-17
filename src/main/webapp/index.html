@@ -2,58 +2,118 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="angular.min.js"></script>
-    <link rel="stylesheet" href="bootstrap.min.css" />
+    <script src="angular.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css"/>
     <title>User Registration Demonstration App</title>
 
 </head>
 <body ng-app="registrationApp">
-    <h1>Hello World</h1>
-    <h2 ng-controller="HelloController">Hello {{helloTo.title}} !</h2>
+<h1>Hello World</h1>
+
+<h2 ng-controller="HelloController">Hello {{helloTo.title}} !</h2>
 
 <div>
+<!--
     <form name="form" class="css-form" novalidate>
         <div>
             Password:
             <input ng-model-options="{ updateOn: 'default blur', debounce: { default: 230, blur: 0 } }"
-                   type="password" ng-model="password" name="password" userpassword />{{password}}<br />
+                   type="password" ng-model="password" name="password" userpassword/>{{password}}<br/>
             <span ng-show="form.password.$pending.password">Checking if password is available...</span>
             <span ng-show="form.password.$error.password">This password is already taken!</span>
         </div>
-        <span>{{password}}</span>
+
+
     </form>
+-->
+
+    <form name="form" class="css-form" novalidate>
+        <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 form-control-label">Password</label>
+
+            <div class="col-sm-7" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }" >
+                <input id="inputPassword3" class="form-control" placeholder="Password"
+                       ng-model-options="{ updateOn: 'default blur', debounce: { default: 330, blur: 0 } }"
+                       type="password" ng-model="password" name="password" userpassword/>
+            </div>
+            <div class="col-sm-3">
+                <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+                <span ng-show="form.password.$pending.password">Checking if password is available...</span>
+                <span ng-show="form.password.$error.password">
+                    {{kokosza}}
+                    {{form.kokosza}}
+                    Password must contain at least one upper character, one lower character, one numeric character, and must contain at least 8 characters</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-secondary">Sign in</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="col-md-6 col-md-offset-3">
+        <h2>Register</h2>
+        <form name="form" ng-submit="register()" role="form">
+            <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" class="form-control" ng-model="user.username" required />
+                <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+            </div>
+
+            <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required, 'has-success' : successAnswer}">
+                <label for="password">Password</label>
+
+                <!--<input type="password" name="password" id="password" class="form-control" ng-model="user.password" required />-->
+
+                <input required id="password" class="form-control" placeholder="Password"
+                       ng-model-options="{ updateOn: 'default blur', debounce: { default: 330, blur: 0 } }"
+                       type="password" ng-model="password" name="password" userpassword/>
+
+                <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+                <span ng-show="form.password.$error.password">Error from server {{kokosza}}</span>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Register</button>
+                <a href="#/login" class="btn btn-link">Cancel</a>
+            </div>
+        </form>
+    </div>
 </div>
 
 <script>
     var app = angular.module("registrationApp", []);
-    app.controller("HelloController", function($scope, $http) {
+    app.controller("HelloController", function ($scope, $http) {
         $scope.helloTo = {};
         $scope.helloTo.title = "World, Angular";
 
-    } );
-    app.directive('userpassword', function($q, $timeout, $http) {
+    });
+    app.directive('userpassword', function ($q, $timeout, $http) {
         return {
             require: 'ngModel',
-            link: function(scope, elm, attrs, ctrl) {
-                var usernames = ['Jim', 'John', 'Jill', 'Jackie'];
-
-                ctrl.$asyncValidators.password = function(modelValue, viewValue) {
+            link: function (scope, elm, attrs, ctrl) {
+                ctrl.$asyncValidators.password = function (modelValue, viewValue) {
                     if (ctrl.$isEmpty(modelValue)) {
                         return $q.when();
                     }
 
                     var def = $q.defer();
 
-//                    var data = {};
-//                    $http.post('/user/add', data).then(
-//                            function(data) {
-//                                def.reject();
-//                            },
-//                            function(data) {
-//                                def.resolve();
-//                            });
+                    $http.post('/password/verify', {
+                        password : modelValue
+                    }).then(
+                        function(data) {
+                            def.resolve();
+                            scope.successAnswer = true;
+                            scope.kokosza = data.status;
+                        },
+                        function(data) {
+                            scope.kokosza = data.status;
+                            def.reject();
+                        });
 
-                    $timeout(function() {
+/*                    $timeout(function() {
                         // Mock a delayed response
                         if (usernames.indexOf(modelValue) === -1) {
                             // The username is available
@@ -62,7 +122,7 @@
                             def.reject();
                         }
 
-                    }, 2000);
+                    }, 2000);*/
 
                     return def.promise;
                 };
