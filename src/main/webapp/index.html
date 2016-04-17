@@ -31,13 +31,15 @@
 
             <!-- password-->
             <div class="form-group"
-                 ng-class="{ 'has-error': form.password.$dirty && (form.password.$error.required || form.password.$error.password) , 'has-success' : passwordServerAnswer}">
+                 ng-class="{ 'has-error': form.password.$dirty && (form.password.$error.required || form.password.$error.password || form.password.$error.minlength) , 'has-success' : passwordServerAnswer}">
                 <label for="password">Password</label>
 
-                <input required id="password" class="form-control" placeholder="Password"
+                <input ng-minlength="8" required id="password" class="form-control" placeholder="Password"
                        ng-model-options="{ updateOn: 'default blur', debounce: { default: 330, blur: 0 } }"
                        type="password" ng-model="password" name="password" userpassword/>
 
+
+                <span class="help-block" ng-show="form.password.$error.minlength">Password must contain at least 8 characters!</span>
                 <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
                 <span ng-show="form.password.$error.password" class="help-block">
                     Password must contain at least:
@@ -58,8 +60,8 @@
                 You have been successfully saved do database.
             </div>
 
-            <div ng-show="objectNotSaved" class="alert alert-danger" role="alert" style="margin-top: 26px">
-                Error during save to database.
+            <div ng-show="objectNotSaved" class="alert alert-warning" role="alert" style="margin-top: 26px">
+                You have been already registered.
             </div>
 
         </form>
