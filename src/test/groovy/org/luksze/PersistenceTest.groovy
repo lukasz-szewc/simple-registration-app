@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.web.WebAppConfiguration
 import spock.lang.Specification
 
-@ContextConfiguration(classes = [SimpleSpringApp.class], loader = SpringApplicationContextLoader.class)
+@ContextConfiguration(classes = [UserRegistrationApplication.class], loader = SpringApplicationContextLoader.class)
 @WebAppConfiguration
 @IntegrationTest
 class PersistenceTest extends Specification {

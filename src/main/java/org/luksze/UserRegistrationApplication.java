@@ -7,10 +7,10 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
-public class SimpleSpringApp {
+public class UserRegistrationApplication {
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(SimpleSpringApp.class, args);
+        SpringApplication.run(UserRegistrationApplication.class, args);
     }
 
     @Bean
@@ -22,6 +22,5 @@ public class SimpleSpringApp {
             }
         };
     }
-
 
 }
