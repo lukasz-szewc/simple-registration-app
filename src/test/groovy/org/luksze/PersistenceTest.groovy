@@ -15,7 +15,7 @@ class PersistenceTest extends Specification {
     @Autowired
     private ApplicationUserTransactionalRepository repository
 
-    def "application can perists objects into database"() {
+    def "application can persists objects into database"() {
         given: "transient entity object"
         def user = new ApplicationUser("Chris", "password")
 
