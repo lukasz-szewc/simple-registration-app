@@ -1,9 +1,12 @@
 package org.luksze;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class UserName {
+
+    @Column(unique=true)
     private String name;
 
     public UserName(String name) {
