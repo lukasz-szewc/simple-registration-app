@@ -1,4 +1,20 @@
 var app = angular.module("registrationApp", []);
+
+app.controller('RegisterUserController', ['$http', '$scope', function($http, $scope) {
+
+    $scope.submit = function() {
+        $http.post('/user/add', {
+            password : $scope.password,
+            name : $scope.username
+        }).then(
+            function(data) {
+            },
+            function(data) {
+            });
+    };
+
+}]);
+
 app.directive('userpassword', function ($q, $timeout, $http) {
     return {
         require: 'ngModel',
@@ -15,12 +31,39 @@ app.directive('userpassword', function ($q, $timeout, $http) {
                 }).then(
                     function(data) {
                         scope.passwordServerAnswer = true;
-                        scope.kokosza = data.status;
                         def.resolve();
                     },
                     function(data) {
                         scope.passwordServerAnswer = false;
-                        scope.kokosza = data.status;
+                        def.reject();
+                    });
+
+                return def.promise;
+            };
+        }
+    };
+});
+
+app.directive('username', function ($q, $timeout, $http) {
+    return {
+        require: 'ngModel',
+        link: function (scope, elm, attrs, ctrl) {
+            ctrl.$asyncValidators.username = function (modelValue, viewValue) {
+                if (ctrl.$isEmpty(modelValue) || modelValue.length < 5) {
+                    return $q.when();
+                }
+
+                var def = $q.defer();
+
+                $http.post('/username/verify', {
+                    name : modelValue
+                }).then(
+                    function(data) {
+                        scope.usernameServerAnswer = true;
+                        def.resolve();
+                    },
+                    function(data) {
+                        scope.usernameServerAnswer = false;
                         def.reject();
                     });
 
