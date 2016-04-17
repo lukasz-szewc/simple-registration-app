@@ -2,11 +2,19 @@ package org.luksze;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Embeddable
 public class UserName {
 
+    public static final String ALPHA_NUMERIC_PATTERN = "^[a-zA-Z0-9_]*$";
+
     @Column(unique=true)
+    @NotNull
+    @Pattern(regexp= ALPHA_NUMERIC_PATTERN)
+    @Size(min = 5)
     private String name;
 
     public UserName(String name) {
@@ -42,6 +50,6 @@ public class UserName {
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        return name != null ? name.hashCode() : 0;
     }
 }
