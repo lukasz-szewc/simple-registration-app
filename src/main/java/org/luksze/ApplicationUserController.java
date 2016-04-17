@@ -1,10 +1,8 @@
 package org.luksze;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -22,7 +20,7 @@ public class ApplicationUserController {
     @RequestMapping(value = "/username/verify", method = RequestMethod.POST)
     public void username(@RequestBody @Valid UserName userName) {
         if (repository.checkUserExist(userName)) {
-            throw new RuntimeException();
+            throw new UserAlreadyExistInDatabaseException();
         }
     }
 
@@ -34,4 +32,6 @@ public class ApplicationUserController {
         transactionalRepository.persistWithinTransaction(user);
     }
 
+    @ResponseStatus(value= HttpStatus.NOT_FOUND, reason="User with this name already exist in database.")
+    public class UserAlreadyExistInDatabaseException extends RuntimeException { }
 }

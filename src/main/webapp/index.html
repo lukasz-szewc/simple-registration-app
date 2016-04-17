@@ -25,6 +25,7 @@
                        type="text" ng-model="username" name="username" username />
 
                 <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+                <span ng-show="form.username.$error.username" class="help-block">{{usernameErrorMessage}}</span>
             </div>
 
             <!-- password-->

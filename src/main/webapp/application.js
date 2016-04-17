@@ -65,7 +65,8 @@ app.directive('username', function ($q, $timeout, $http) {
                         scope.usernameServerAnswer = true;
                         def.resolve();
                     },
-                    function(data) {
+                    function(response) {
+                        scope.usernameErrorMessage = response.data.message;
                         scope.usernameServerAnswer = false;
                         def.reject();
                     });
