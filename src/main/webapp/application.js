@@ -58,6 +58,14 @@ app.directive('username', function ($q, $timeout, $http) {
 
                 var def = $q.defer();
 
+                function fetchErrorMessage(response) {
+                    if (response.data.errors != null) {
+                        scope.usernameErrorMessage = response.data.errors[0].defaultMessage;
+                    } else {
+                        scope.usernameErrorMessage = response.data.message;
+                    }
+                }
+
                 $http.post('/username/verify', {
                     name : modelValue
                 }).then(
@@ -66,7 +74,7 @@ app.directive('username', function ($q, $timeout, $http) {
                         def.resolve();
                     },
                     function(response) {
-                        scope.usernameErrorMessage = response.data.message;
+                        fetchErrorMessage(response);
                         scope.usernameServerAnswer = false;
                         def.reject();
                     });

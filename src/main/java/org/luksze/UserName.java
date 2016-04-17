@@ -13,7 +13,7 @@ public class UserName {
 
     @Column(unique=true)
     @NotNull
-    @Pattern(regexp= ALPHA_NUMERIC_PATTERN)
+    @Pattern(regexp= ALPHA_NUMERIC_PATTERN, message = "Name contains not alpha numeric character")
     @Size(min = 5)
     private String name;
 

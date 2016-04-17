@@ -13,11 +13,11 @@
 <div>
 
     <div class="col-md-6 col-md-offset-3">
-        <h2>Register new user</h2>
+        <h2>Please register yourself</h2>
         <form name="form" ng-controller="RegisterUserController" role="form" novalidate>
 
             <!-- username-->
-            <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && (form.username.$error.required || form.username.$error.username) , 'has-success' : usernameServerAnswer }">
+            <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && (form.username.$error.required || form.username.$error.username || form.username.$error.minlength) , 'has-success' : usernameServerAnswer }">
                 <label for="username">Username</label>
 
                 <input ng-minlength="5" required id="username" class="form-control" placeholder="User name"
@@ -26,6 +26,7 @@
 
                 <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
                 <span ng-show="form.username.$error.username" class="help-block">{{usernameErrorMessage}}</span>
+                <span class="help-block" ng-show="form.username.$error.minlength">Username must contain at least 5 characters!</span>
             </div>
 
             <!-- password-->
@@ -54,7 +55,7 @@
             </div>
 
             <div ng-show="objectSaved" class="alert alert-success" role="alert" style="margin-top: 26px">
-                User has been successfully saved in database.
+                You have been successfully saved do database.
             </div>
 
             <div ng-show="objectNotSaved" class="alert alert-danger" role="alert" style="margin-top: 26px">

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class ApplicationUser {
@@ -14,10 +15,12 @@ public class ApplicationUser {
     private Long id;
 
     @Embedded
+    @NotNull
     @Valid
     private UserName name;
 
     @Embedded
+    @NotNull
     @Valid
     private Password password;
 
@@ -58,5 +61,13 @@ public class ApplicationUser {
 
     public void setPassword(Password password) {
         this.password = password;
+    }
+
+    public UserName getName() {
+        return name;
+    }
+
+    public Password getPassword() {
+        return password;
     }
 }
