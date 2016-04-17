@@ -13,7 +13,7 @@ import spock.lang.Specification
 class PersistenceTest extends Specification {
 
     @Autowired
-    private TransactionalRepository repository
+    private ApplicationUserTransactionalRepository repository
 
     def "application can perists objects into database"() {
         given: "transient entity object"
