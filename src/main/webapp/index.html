@@ -2,9 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <script src="angular.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <title>User Registration Demonstration App</title>
+
 </head>
-<body>
+<body ng-app="registrationApp">
     <h1>Hello World</h1>
+    <h2 ng-controller="HelloController">Hello {{helloTo.title}} !</h2>
+
+<script>
+    angular.module("registrationApp", []).controller("HelloController", function($scope, $http) {
+                $scope.helloTo = {};
+                $scope.helloTo.title = "World, Angular";
+
+            } );
+</script>
+
 </body>
 </html>
