@@ -11,12 +11,66 @@
     <h1>Hello World</h1>
     <h2 ng-controller="HelloController">Hello {{helloTo.title}} !</h2>
 
-<script>
-    angular.module("registrationApp", []).controller("HelloController", function($scope, $http) {
-                $scope.helloTo = {};
-                $scope.helloTo.title = "World, Angular";
+<div>
+    <form name="form" class="css-form" novalidate>
+        <div>
+            Password:
+            <input ng-model-options="{ updateOn: 'default blur', debounce: { default: 230, blur: 0 } }"
+                   type="password" ng-model="password" name="password" userpassword />{{password}}<br />
+            <span ng-show="form.password.$pending.password">Checking if password is available...</span>
+            <span ng-show="form.password.$error.password">This password is already taken!</span>
+        </div>
+        <span>{{password}}</span>
+    </form>
+</div>
 
-            } );
+<script>
+    var app = angular.module("registrationApp", []);
+    app.controller("HelloController", function($scope, $http) {
+        $scope.helloTo = {};
+        $scope.helloTo.title = "World, Angular";
+
+    } );
+    app.directive('userpassword', function($q, $timeout, $http) {
+        return {
+            require: 'ngModel',
+            link: function(scope, elm, attrs, ctrl) {
+                var usernames = ['Jim', 'John', 'Jill', 'Jackie'];
+
+                ctrl.$asyncValidators.password = function(modelValue, viewValue) {
+                    if (ctrl.$isEmpty(modelValue)) {
+                        return $q.when();
+                    }
+
+                    var def = $q.defer();
+
+//                    var data = {};
+//                    $http.post('/user/add', data).then(
+//                            function(data) {
+//                                def.reject();
+//                            },
+//                            function(data) {
+//                                def.resolve();
+//                            });
+
+                    $timeout(function() {
+                        // Mock a delayed response
+                        if (usernames.indexOf(modelValue) === -1) {
+                            // The username is available
+                            def.resolve();
+                        } else {
+                            def.reject();
+                        }
+
+                    }, 2000);
+
+                    return def.promise;
+                };
+            }
+        };
+    });
+
+
 </script>
 
 </body>
