@@ -3,8 +3,7 @@ Simple user registration application.
 
 Continuous Integration:
 
-[![Build Status](https://snap-ci.com/lukasz-szewc/architech-registration-app/branch/master/build_image)](https://snap-ci.com/lukasz-szewc/architech-registration-app/branch/master)
-
+[![Build Status](https://snap-ci.com/lukasz-szewc/simple-registration-app/branch/master/build_image)](https://snap-ci.com/lukasz-szewc/simple-registration-app/branch/master)
 This is standard Spring Boot application, build by gradle.
 
 Simply clone it, and execute ./gradlew bootRun    
